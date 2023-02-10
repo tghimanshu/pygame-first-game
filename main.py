@@ -7,11 +7,18 @@ clock = pygame.time.Clock()
 
 # Base Variables
 width, height = 480, 360
-x, y = 50, 5
+x, y = 150, 5
 velocity = 2
 jumpVelocity = 6
 black = 0, 0, 0
 white = 255, 255, 255
+pipeX = width
+score = 0
+font = pygame.font.SysFont('Serif', 2)
+text = font.render(str("yo"), True, white, black)
+textRect = text.get_rect()
+textRect.x = 0
+textRect.y = 0
 
 # creating the basic screen
 screen = pygame.display.set_mode((width, height))
@@ -50,9 +57,22 @@ while running:
     # fill screen
     screen.fill(black)
     # obstacles
-    pipe_1 = pygame.draw.rect(screen, white, pygame.Rect(40, 0, 40, 100))
+    pipe_1 = pygame.draw.rect(screen, white, pygame.Rect(pipeX, 0, 40, 100))
+    pipe_2 = pygame.draw.rect(screen, white, pygame.Rect(pipeX, 250, 40, 100))
+    pipeX -= 2
+    if pipeX < -40:
+        pipeX = width
+
     # player
     ball = pygame.draw.circle(screen, white, (x, y), 5)
+    if ball.collidelistall([pipe_1, pipe_2]):
+        pipeX = width
+        score = 0
+        y = 5
+    if pipe_1.x == 100:
+        print(score)
+        score += 1
+
     # update
     pygame.display.update()
 
