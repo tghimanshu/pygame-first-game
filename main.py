@@ -24,6 +24,8 @@ textRect.y = 0
 screen = pygame.display.set_mode((width, height))
 pygame.display.set_caption("First PyGame")
 
+pipe = pygame.image.load("pipe.png")
+
 
 # game loop
 running = True
@@ -72,6 +74,7 @@ while running:
     if pipe_1.x == 100:
         print(score)
         score += 1
+    screen.blit(pipe, pipe.get_rect())
 
     # update
     pygame.display.update()
